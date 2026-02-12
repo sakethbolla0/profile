@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sai Saketh Bolla — Software Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a2e;
+    --slate: #3d3d5c;
+    --muted: #6b6b8d;
+    --light: #f0eff4;
+    --cream: #faf9fc;
+    --accent: #2d5a7b;
+    --accent-light: #e8f0f6;
+    --white: #ffffff;
+    --border: #e2e1e8;
+    --shadow: 0 1px 3px rgba(26,26,46,0.06), 0 6px 24px rgba(26,26,46,0.04);
+    --shadow-lg: 0 4px 12px rgba(26,26,46,0.08), 0 24px 48px rgba(26,26,46,0.06);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    color: var(--ink);
+    background: var(--cream);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    background: rgba(250,249,252,0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    transition: box-shadow 0.3s;
+  }
+  nav.scrolled { box-shadow: var(--shadow); }
+  .nav-inner {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 32px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--ink);
+    text-decoration: none;
+    letter-spacing: -0.02em;
+  }
+  .nav-links { display: flex; gap: 32px; }
+  .nav-links a {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    transition: color 0.25s;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 1.5px;
+    background: var(--accent);
+    transition: width 0.3s ease;
+  }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-links a:hover::after { width: 100%; }
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 120px 32px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(circle, rgba(45,90,123,0.06) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .hero-content {
+    max-width: 720px;
+    text-align: center;
+    animation: fadeUp 0.8s ease both;
+  }
+  .hero-label {
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .hero-label::before {
+    content: '';
+    width: 24px;
+    height: 1.5px;
+    background: var(--accent);
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 6vw, 4.2rem);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+    margin-bottom: 24px;
+  }
+  .hero p {
+    font-size: 1.1rem;
+    color: var(--muted);
+    max-width: 560px;
+    margin: 0 auto 40px;
+    line-height: 1.75;
+  }
+  .hero-ctas { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .btn {
+    padding: 14px 32px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: none;
+    letter-spacing: 0.01em;
+  }
+  .btn-primary {
+    background: var(--ink);
+    color: var(--white);
+  }
+  .btn-primary:hover {
+    background: var(--slate);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-lg);
+  }
+  .btn-outline {
+    background: transparent;
+    color: var(--ink);
+    border: 1.5px solid var(--border);
+  }
+  .btn-outline:hover {
+    border-color: var(--ink);
+    background: var(--white);
+    transform: translateY(-1px);
+  }
+  section { padding: 100px 32px; }
+  .container { max-width: 1080px; margin: 0 auto; }
+  .section-label {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 3.5vw, 2.4rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 48px;
+  }
+  .about { background: var(--white); }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+  .about-text p {
+    color: var(--slate);
+    font-size: 1.02rem;
+    margin-bottom: 20px;
+    line-height: 1.8;
+  }
+  .about-highlights {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  .highlight-card {
+    padding: 28px 24px;
+    background: var(--cream);
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    transition: all 0.3s ease;
+  }
+  .highlight-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+  }
+  .highlight-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+  .highlight-label {
+    font-size: 0.82rem;
+    color: var(--muted);
+    font-weight: 500;
+  }
+  .experience { background: var(--cream); }
+  .timeline { position: relative; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 8px;
+    bottom: 8px;
+    width: 1.5px;
+    background: var(--border);
+  }
+  .timeline-item {
+    padding-left: 40px;
+    margin-bottom: 48px;
+    position: relative;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeUp 0.5s ease forwards;
+  }
+  .timeline-item:nth-child(1) { animation-delay: 0.1s; }
+  .timeline-item:nth-child(2) { animation-delay: 0.2s; }
+  .timeline-item:nth-child(3) { animation-delay: 0.3s; }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -4.5px;
+    top: 8px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--white);
+    border: 2px solid var(--accent);
+  }
+  .timeline-date {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--accent);
+    letter-spacing: 0.04em;
+    margin-bottom: 6px;
+  }
+  .timeline-role {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 2px;
+  }
+  .timeline-company {
+    font-size: 0.92rem;
+    color: var(--muted);
+    margin-bottom: 14px;
+    font-weight: 500;
+  }
+  .timeline-desc {
+    color: var(--slate);
+    font-size: 0.92rem;
+    line-height: 1.75;
+  }
+  .timeline-desc li {
+    margin-bottom: 8px;
+    list-style: none;
+    position: relative;
+    padding-left: 16px;
+  }
+  .timeline-desc li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--muted);
+    font-size: 0.8rem;
+  }
+  .skills { background: var(--white); }
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .skill-group {
+    padding: 32px 28px;
+    background: var(--cream);
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    transition: all 0.3s ease;
+  }
+  .skill-group:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+  }
+  .skill-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: var(--accent-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 18px;
+    font-size: 1.2rem;
+  }
+  .skill-group h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 12px;
+  }
+  .skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .skill-tag {
+    padding: 5px 14px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 0.8rem;
+    color: var(--slate);
+    font-weight: 500;
+    transition: all 0.2s;
+  }
+  .skill-tag:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .certs { background: var(--cream); }
+  .cert-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  .cert-card {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 24px 28px;
+    background: var(--white);
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    transition: all 0.3s ease;
+  }
+  .cert-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+  }
+  .cert-badge {
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    background: var(--accent-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 1.4rem;
+  }
+  .cert-info h4 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 3px;
+  }
+  .cert-info p {
+    font-size: 0.82rem;
+    color: var(--muted);
+  }
+  .contact {
+    background: var(--ink);
+    color: var(--white);
+    text-align: center;
+  }
+  .contact .section-label { color: rgba(255,255,255,0.5); }
+  .contact .section-title { color: var(--white); }
+  .contact-text {
+    font-size: 1.05rem;
+    color: rgba(255,255,255,0.65);
+    max-width: 480px;
+    margin: -24px auto 40px;
+    line-height: 1.75;
+  }
+  .contact-links {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .contact-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 28px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 10px;
+    color: var(--white);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+  }
+  .contact-link:hover {
+    background: rgba(255,255,255,0.14);
+    transform: translateY(-2px);
+  }
+  .contact-link svg {
+    width: 18px;
+    height: 18px;
+    opacity: 0.7;
+  }
+  footer {
+    background: var(--ink);
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding: 24px 32px;
+    text-align: center;
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.35);
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .fade-in {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: all 0.6s ease;
+  }
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  @media (max-width: 768px) {
+    .about-grid { grid-template-columns: 1fr; gap: 40px; }
+    .skills-grid { grid-template-columns: 1fr; }
+    .nav-links { gap: 20px; }
+    .nav-links a { font-size: 0.78rem; }
+    section { padding: 72px 20px; }
+    .hero { padding: 100px 20px 60px; }
+  }
+  @media (max-width: 480px) {
+    .nav-links { display: none; }
+    .about-highlights { grid-template-columns: 1fr; }
+    .hero-ctas { flex-direction: column; align-items: center; }
+  }
+</style>
+</head>
+<body>
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">S. Saketh Bolla</a>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-label">Software Engineer</div>
+    <h1>Building reliable systems at scale.</h1>
+    <p>Cloud infrastructure engineer with 3+ years of experience in GCP, Kubernetes, and production systems. Currently pursuing an MEng in Software Engineering at the University of Maryland.</p>
+    <div class="hero-ctas">
+      <a href="#contact" class="btn btn-primary">Get in Touch</a>
+      <a href="#experience" class="btn btn-outline">View Experience</a>
+    </div>
+  </div>
+</section>
+<section class="about" id="about">
+  <div class="container">
+    <div class="section-label">About</div>
+    <div class="about-grid">
+      <div class="about-text fade-in">
+        <p>I'm Sai Saketh Bolla — a software engineer who thrives at the intersection of cloud infrastructure and operational reliability. My background spans designing data migration pipelines, automating production server operations, and training engineering teams on cloud-native technologies.</p>
+        <p>At Prodapt Solutions, I worked on large-scale GCP projects supporting Verizon's critical infrastructure — from migrating 100+ TB of data to BigQuery, to building auto-healing systems that reduced major incidents by 40%. I bring a hands-on, results-driven approach to everything I build.</p>
+        <p>I'm currently pursuing my Master's in Software Engineering at the University of Maryland, deepening my expertise in cloud computing, containerization, and modern software architecture.</p>
+      </div>
+      <div class="about-highlights fade-in">
+        <div class="highlight-card">
+          <div class="highlight-number">100+ TB</div>
+          <div class="highlight-label">Data Migrated to Cloud</div>
+        </div>
+        <div class="highlight-card">
+          <div class="highlight-number">40%</div>
+          <div class="highlight-label">Reduction in Major Incidents</div>
+        </div>
+        <div class="highlight-card">
+          <div class="highlight-number">3+</div>
+          <div class="highlight-label">Years of Experience</div>
+        </div>
+        <div class="highlight-card">
+          <div class="highlight-number">2x</div>
+          <div class="highlight-label">GCP Certified</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="experience" id="experience">
+  <div class="container">
+    <div class="section-label">Experience</div>
+    <div class="section-title">Where I've worked</div>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-date">May 2022 — December 2024</div>
+        <div class="timeline-role">Associate Software Engineer</div>
+        <div class="timeline-company">Prodapt Solutions · Hyderabad, India</div>
+        <ul class="timeline-desc">
+          <li>Conducted cloud-readiness training for 20 engineers across three GCP-based projects involving 40+ new hires</li>
+          <li>Automated server operations using Linux scripting, Jenkins pipelines, and crontab scheduling — reducing major incidents by 40%</li>
+          <li>Migrated 100+ TB from on-prem MySQL to BigQuery, cutting database maintenance costs by 30%</li>
+        </ul>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">September 2022 — September 2023</div>
+        <div class="timeline-role">Production & Application Support</div>
+        <div class="timeline-company">Verizon (via Prodapt) · Hyderabad, India</div>
+        <ul class="timeline-desc">
+          <li>Led a team of six engineers for 24/7 monitoring of production servers supporting critical order processing</li>
+          <li>Analyzed service outages and documented root causes in collaboration with stakeholders</li>
+          <li>Identified and mitigated disruptions using New Relic monitoring and log analysis</li>
+        </ul>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">May 2022 — August 2022</div>
+        <div class="timeline-role">GCP Data Ingestion Engineer</div>
+        <div class="timeline-company">Verizon (via Prodapt) · Hyderabad, India</div>
+        <ul class="timeline-desc">
+          <li>Built batch data ingestion pipelines into BigQuery using Python and Apache Airflow via Cloud Composer</li>
+          <li>Converted Hive queries to BigQuery-compatible SQL for optimized data processing</li>
+          <li>Implemented Cloud Functions for automated Airflow job triggers from GCS uploads</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="skills" id="skills">
+  <div class="container">
+    <div class="section-label">Skills</div>
+    <div class="section-title">Technical toolkit</div>
+    <div class="skills-grid">
+      <div class="skill-group fade-in">
+        <div class="skill-icon">⚙️</div>
+        <h3>Cloud & DevOps</h3>
+        <div class="skill-tags">
+          <span class="skill-tag">GCP</span>
+          <span class="skill-tag">Docker</span>
+          <span class="skill-tag">Kubernetes</span>
+          <span class="skill-tag">Terraform</span>
+          <span class="skill-tag">BigQuery</span>
+          <span class="skill-tag">CI/CD</span>
+          <span class="skill-tag">Jenkins</span>
+        </div>
+      </div>
+      <div class="skill-group fade-in">
+        <div class="skill-icon">💻</div>
+        <h3>Programming & Tools</h3>
+        <div class="skill-tags">
+          <span class="skill-tag">Python</span>
+          <span class="skill-tag">SQL</span>
+          <span class="skill-tag">HTML</span>
+          <span class="skill-tag">Git</span>
+          <span class="skill-tag">Linux</span>
+          <span class="skill-tag">OOP</span>
+        </div>
+      </div>
+      <div class="skill-group fade-in">
+        <div class="skill-icon">📊</div>
+        <h3>Data & Infrastructure</h3>
+        <div class="skill-tags">
+          <span class="skill-tag">JSON</span>
+          <span class="skill-tag">XML</span>
+          <span class="skill-tag">YAML</span>
+          <span class="skill-tag">Apache Airflow</span>
+          <span class="skill-tag">New Relic</span>
+          <span class="skill-tag">Jira</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="certs">
+  <div class="container">
+    <div class="section-label">Credentials</div>
+    <div class="section-title">Certifications & Achievements</div>
+    <div class="cert-list">
+      <div class="cert-card fade-in">
+        <div class="cert-badge">☁️</div>
+        <div class="cert-info">
+          <h4>Associate Cloud Engineer</h4>
+          <p>Google Cloud Certified</p>
+        </div>
+      </div>
+      <div class="cert-card fade-in">
+        <div class="cert-badge">🛠️</div>
+        <div class="cert-info">
+          <h4>Professional DevOps Engineer</h4>
+          <p>Google Cloud Certified</p>
+        </div>
+      </div>
+      <div class="cert-card fade-in">
+        <div class="cert-badge">🏆</div>
+        <div class="cert-info">
+          <h4>4th Place — Flipkart Grid</h4>
+          <p>National/International Warehouse Robot Competition, 2022</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="contact" id="contact">
+  <div class="container">
+    <div class="section-label">Contact</div>
+    <div class="section-title">Let's connect</div>
+    <p class="contact-text">Open to software engineering internship and full-time opportunities. Let's talk.</p>
+    <div class="contact-links">
+      <a href="mailto:sakethb@umd.edu" class="contact-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 7L2 7"/></svg>
+        sakethb@umd.edu
+      </a>
+      <a href="https://www.linkedin.com/in/sai-saketh-bolla/" target="_blank" class="contact-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-4 0v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        LinkedIn
+      </a>
+      <a href="tel:240-423-9350" class="contact-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        240-423-9350
+      </a>
+    </div>
+  </div>
+</section>
+<footer>
+  &copy; 2026 Sai Saketh Bolla. All rights reserved.
+</footer>
+<script>
+  window.addEventListener('scroll', () => {
+    document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 10);
+  });
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+</script>
+</body>
+</html>
